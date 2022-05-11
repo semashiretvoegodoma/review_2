@@ -2,7 +2,6 @@ smile_hand = '\U0001F590'
 smile_question = '\U0001F928'
 smile_document = '\U0001F4C4'
 
-
 flag_uk = '\U0001F1EC\U0001F1E7'
 flag_russia = '\U0001F1F7\U0001F1FA'
 flag_deutsch = '\U0001F1E9\U0001F1EA'

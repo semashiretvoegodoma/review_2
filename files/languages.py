@@ -59,14 +59,9 @@ def keyboard_c():
     return keyboard
 
 
-base_lang = 'en'
+base_lang = 'ru'
 input_lang = 'ru'
-output_lang = 'en'
-
-languages = {"English": 'en', "Русский": 'ru', "Deutsch": 'de',
-             "中国人": 'zh-cn', "हिन्दी": 'hi', "Español": 'es',
-             "Português": 'pt', "Français": 'fr',
-             "Italiano": 'it', "Қазақ": 'kk', "Український": 'uk'}
+output_lang = 'ru'
 
 instruction = "Instruction for use.\n" \
               " /choose_input_lang - choose the language you are translating from.\n" \

@@ -4,9 +4,12 @@ import emoji
 from languages import instruction
 from translate import translate
 import languages
-import config
 
-bot = TeleBot(config.TOKEN)
+TOKEN = '5332298321:AAHsUhdQUPwKctnQGcp2CV0YPHOoNerq_xY'
+
+bot = TeleBot(TOKEN)
+
+keyboard = types.InlineKeyboardMarkup()
 
 
 @bot.message_handler(commands=['start'])
@@ -19,10 +22,11 @@ def start(message):
 
 @bot.callback_query_handler(func=lambda a: a.data in languages.a)
 def translate_instruction(a):
-    keyboard_a = types.InlineKeyboardMarkup()
-
     if a.data == "russian":
         languages.base_lang = 'ru'
+
+    elif a.data == "english":
+        languages.base_lang = 'en'
 
     elif a.data == "deutsch":
         languages.base_lang = 'de'
@@ -51,16 +55,22 @@ def translate_instruction(a):
     elif a.data == "ukrainian":
         languages.base_lang = 'uk'
 
-    bot.send_message(a.message.chat.id, translate(instruction, 'en', languages.base_lang), reply_markup=keyboard_a)
+    bot.send_message(a.message.chat.id, translate(instruction, 'en', languages.base_lang), reply_markup=keyboard)
 
 
 @bot.message_handler(commands=['choose_input_lang'])
+def promeshutok_1(message):
+    bot.send_message(message.chat.id, translate("Please select the language you want to translate from", 'en',
+                                                languages.base_lang), reply_markup=languages.keyboard_b())
+
+
 @bot.callback_query_handler(func=lambda b: b.data in languages.b)
 def in_lang(b):
-    keyboard_b = types.InlineKeyboardMarkup()
-
     if b.data == "russian_1":
         languages.input_lang = 'ru'
+
+    elif b.data == "english_1":
+        languages.input_lang = 'en'
 
     elif b.data == "deutsch_1":
         languages.input_lang = 'de'
@@ -89,18 +99,25 @@ def in_lang(b):
     elif b.data == "ukrainian_1":
         languages.input_lang = 'uk'
 
-    bot.send_message(b.message.chat.id, translate("Please select the language you want to translate <b>from</b>", 'en',
-                                                  languages.input_lang),
-                     reply_markup=keyboard_b, parse_mode='html')
+    bot.send_message(b.message.chat.id,
+                     translate("Now select another language with the command /choose_output_lang", 'en',
+                               languages.base_lang),
+                     reply_markup=keyboard)
 
 
 @bot.message_handler(commands=['choose_output_lang'])
+def promeshutok_2(message):
+    bot.send_message(message.chat.id, translate("Please select the language you want to translate into", 'en',
+                                                languages.base_lang), reply_markup=languages.keyboard_c())
+
+
 @bot.callback_query_handler(func=lambda c: c.data in languages.c)
 def out_lang(c):
-    keyboard_c = types.InlineKeyboardMarkup()
-
     if c.data == "russian_2":
         languages.output_lang = 'ru'
+
+    elif c.data == "english_2":
+        languages.output_lang = 'en'
 
     elif c.data == "deutsch_2":
         languages.output_lang = 'de'
@@ -129,10 +146,7 @@ def out_lang(c):
     elif c.data == "ukrainian_2":
         languages.output_lang = 'uk'
 
-    bot.send_message(c.message.chat.id,
-                     translate("Please select the language you would like to translate <b>into</b>", 'en',
-                               languages.output_lang),
-                     reply_markup=keyboard_c, parse_mode='html')
+    bot.send_message(c.message.chat.id, translate("Super. Write", 'en', languages.base_lang), reply_markup=keyboard)
 
 
 @bot.message_handler(commands=['help'])
